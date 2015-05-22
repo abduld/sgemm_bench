@@ -1,0 +1,283 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      9056,        274]
+NotebookOptionsPosition[      8202,        240]
+NotebookOutlinePosition[      8558,        256]
+CellTagsIndexPosition[      8515,        253]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.641295403013687*^9, 3.641295412335339*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"sgemmSize", "[", "s_", "]"}], ":=", 
+  RowBox[{"StringReplace", "[", 
+   RowBox[{"s", ",", 
+    RowBox[{
+     RowBox[{"___", "~~", "\"\<sgemm_\>\"", "~~", 
+      RowBox[{"n", ":", 
+       RowBox[{"DigitCharacter", "..."}]}], "~~", "\"\<_\>\"", "~~", "___"}], 
+     "\[Rule]", 
+     RowBox[{"ToExpression", "[", "n", "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.641295505874155*^9, 3.641295512323473*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"times", "[", "file_", "]"}], ":=", 
+  RowBox[{"First", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"StringReplace", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{
+        RowBox[{
+        "___", "~~", "\"\<sgemm_sm35\>\"", "~~", "___", "~~", 
+         "\"\<gputime=[ \>\"", "~~", 
+         RowBox[{"n", ":", 
+          RowBox[{"DigitCharacter", "..."}]}], "~~", "\"\<.\>\"", "~~", 
+         RowBox[{"f", ":", 
+          RowBox[{"DigitCharacter", "..."}]}], "~~", "\"\< ]\>\"", "~~", 
+         "___"}], "\[RuleDelayed]", 
+        RowBox[{"StringJoin", "[", 
+         RowBox[{
+          RowBox[{"ToString", "[", "n", "]"}], ",", "\"\<.\>\"", ",", 
+          RowBox[{"ToString", "[", "f", "]"}]}], "]"}]}]}], "]"}], "&"}], "/@", 
+    RowBox[{"Select", "[", 
+     RowBox[{
+      RowBox[{"StringSplit", "[", 
+       RowBox[{
+        RowBox[{"Import", "[", 
+         RowBox[{"file", ",", "\"\<Text\>\""}], "]"}], ",", "\"\<\\n\>\""}], 
+       "]"}], ",", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"#", ",", 
+         RowBox[{"___", "~~", "\"\<sgemm_sm35\>\"", "~~", "___"}]}], "]"}], 
+       "&"}]}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6412955322097073`*^9, 3.6412958953205748`*^9}, {
+   3.641296154513488*^9, 3.64129616516943*^9}, 3.641296287563326*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"impact2Files", "=", " ", 
+   RowBox[{"FileNames", "[", 
+    RowBox[{"\"\<*log\>\"", ",", "\"\<impact2\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dockerFiles", "=", " ", 
+   RowBox[{"FileNames", "[", 
+    RowBox[{"\"\<*log\>\"", ",", "\"\<docker\>\""}], "]"}]}], ";"}]}], "Input",\
+
+ CellChangeTimes->{{3.641295376847683*^9, 3.6412953963111143`*^9}, {
+  3.6412954364308643`*^9, 3.641295521810667*^9}, {3.6412960818217907`*^9, 
+  3.641296098826748*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"impact2Times", "=", 
+   RowBox[{"Sort", "@", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"ToExpression", "@", 
+          RowBox[{"sgemmSize", "[", "#", "]"}]}], ",", 
+         RowBox[{"ToExpression", "@", 
+          RowBox[{"times", "[", "#", "]"}]}]}], "}"}], "&"}], ",", 
+      "impact2Files"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dockerTimes", "=", 
+   RowBox[{"Sort", "@", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"ToExpression", "@", 
+          RowBox[{"sgemmSize", "[", "#", "]"}]}], ",", 
+         RowBox[{"ToExpression", "@", 
+          RowBox[{"times", "[", "#", "]"}]}]}], "}"}], "&"}], ",", 
+      "dockerFiles"}], "]"}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6412960431889353`*^9, 3.641296203201171*^9}, {
+  3.641296296013565*^9, 3.6412963048016367`*^9}, {3.641296345924561*^9, 
+  3.641296348877083*^9}, {3.641296444226544*^9, 3.6412964533540773`*^9}, {
+  3.6412965101133757`*^9, 3.6412965136644497`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Sort", "@", "impact2Times"}]], "Input",
+ CellChangeTimes->{{3.641296410228032*^9, 3.641296414674674*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"512", ",", "208.416`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1024", ",", "173.92`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2048", ",", "754.176`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4096", ",", "1484.992`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"8192", ",", "7707.232`"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.641296415148273*^9, {3.641296446945333*^9, 3.6412964543990593`*^9}, 
+   3.641296515309894*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Sort", "@", "dockerTimes"}]], "Input",
+ CellChangeTimes->{{3.64129627019058*^9, 3.6412962717572813`*^9}, {
+   3.6412963274859037`*^9, 3.641296339771451*^9}, 3.641296405749984*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"512", ",", "209.056`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1024", ",", "173.888`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2048", ",", "754.272`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4096", ",", "1480.384`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"8192", ",", "7719.36`"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.641296220431185*^9, {3.641296272139282*^9, 3.641296340176034*^9}, 
+   3.641296406154028*^9, {3.641296447661726*^9, 3.641296455632749*^9}, 
+   3.6412965161290607`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", "\[IndentingNewLine]", 
+  RowBox[{"\"\<times.png\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"impact2Times", ",", "dockerTimes"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+     RowBox[{"Mesh", "\[Rule]", "All"}], ",", 
+     RowBox[{"PlotLegends", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Impact2\>\"", ",", "\"\<docker\>\""}], "}"}]}]}], "]"}]}],
+   "]"}]], "Input",
+ CellChangeTimes->{{3.6412962040865717`*^9, 3.641296267872796*^9}, {
+  3.641296310766575*^9, 3.641296397090521*^9}, {3.641296482011208*^9, 
+  3.641296504295731*^9}}],
+
+Cell[BoxData["\<\"times.png\"\>"], "Output",
+ CellChangeTimes->{{3.6412962157349653`*^9, 3.641296321807493*^9}, {
+   3.641296353944271*^9, 3.641296367509623*^9}, 3.6412963977121677`*^9, 
+   3.64129645640598*^9, 3.6412965322795486`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<table.png\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Join", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{
+         "\"\<size NxNxN\>\"", ",", "\"\<Host Time (s)\>\"", ",", 
+          "\"\<Docker Time (s)\>\""}], "}"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Transpose", "[", "\[IndentingNewLine]", 
+        RowBox[{"Join", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"impact2Times", "[", 
+            RowBox[{"[", 
+             RowBox[{"All", ",", "1"}], "]"}], "]"}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"impact2Times", "[", 
+            RowBox[{"[", 
+             RowBox[{"All", ",", "2"}], "]"}], "]"}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"dockerTimes", "[", 
+            RowBox[{"[", 
+             RowBox[{"All", ",", "2"}], "]"}], "]"}], "}"}]}], 
+         "\[IndentingNewLine]", "]"}], "]"}]}], "\[IndentingNewLine]", "]"}], 
+     ",", 
+     RowBox[{"Frame", "\[Rule]", "All"}]}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.641296552983245*^9, 3.6412967030820293`*^9}}],
+
+Cell[BoxData["\<\"table.png\"\>"], "Output",
+ CellChangeTimes->{
+  3.641296559039353*^9, {3.641296598819276*^9, 3.6412966066329737`*^9}, {
+   3.641296647594962*^9, 3.641296673128606*^9}, 3.641296703431881*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, 292}, {81, Automatic}},
+FrontEndVersion->"10.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 15, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 189, 4, 43, "Input"],
+Cell[750, 26, 446, 11, 119, "Input"],
+Cell[1199, 39, 1325, 34, 244, "Input"],
+Cell[2527, 75, 516, 13, 69, "Input"],
+Cell[3046, 90, 1122, 30, 219, "Input"],
+Cell[CellGroupData[{
+Cell[4193, 124, 129, 2, 43, "Input"],
+Cell[4325, 128, 517, 15, 69, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4879, 148, 203, 3, 43, "Input"],
+Cell[5085, 153, 589, 16, 69, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5711, 174, 675, 15, 144, "Input"],
+Cell[6389, 191, 235, 3, 43, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6661, 199, 1313, 33, 269, "Input"],
+Cell[7977, 234, 209, 3, 43, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
