@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "cublas.h"
-#define WA HA
-#define WB HA
 #define HB WA
 #define WC WB
 #define HC HA
@@ -14,6 +12,8 @@ int  main (int argc, char** argv) {
   cublasInit();
 
   int HA =  atoi(argv[1]);
+  int WA =  atoi(argv[2]);
+  int WB =  atoi(argv[3]);
   float *A = (float*)malloc(HA*WA*sizeof(float));
   float *B = (float*)malloc(HB*WB*sizeof(float));
   float *C = (float*)malloc(HC*WC*sizeof(float));

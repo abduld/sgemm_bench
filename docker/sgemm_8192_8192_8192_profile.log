@@ -1,0 +1,13 @@
+# CUDA_PROFILE_LOG_VERSION 2.0
+# CUDA_DEVICE 0 GeForce GTX TITAN Z
+# CUDA_CONTEXT 1
+# TIMESTAMPFACTOR 13dde4e74e989ead
+method,gputime,cputime,occupancy
+method=[ memcpyHtoD ] gputime=[ 1.696 ] cputime=[ 7.534 ] 
+method=[ memcpyHtoD ] gputime=[ 85880.641 ] cputime=[ 85605.914 ] 
+method=[ memcpyHtoD ] gputime=[ 85845.086 ] cputime=[ 85499.609 ] 
+method=[ sgemm_sm_heavy_nn_ldg ] gputime=[ 321532.312 ] cputime=[ 13.531 ] occupancy=[ 0.125 ] 
+method=[ sgemm_sm35_ldg_nn_128x16x64x16x16 ] gputime=[ 7719.360 ] cputime=[ 6.211 ] occupancy=[ 0.250 ] 
+method=[ sgemm_sm_heavy_nt_ldg ] gputime=[ 335458.062 ] cputime=[ 5.244 ] occupancy=[ 0.125 ] 
+method=[ sgemm_sm35_ldg_nt_128x16x64x16x16 ] gputime=[ 7288.128 ] cputime=[ 4.432 ] occupancy=[ 0.250 ] 
+method=[ memcpyDtoH ] gputime=[ 91560.734 ] cputime=[ 763917.062 ] 
